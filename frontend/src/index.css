@@ -1,0 +1,17 @@
+/* frontend/src/index.css */
+/* Only defines CSS variables and resets — style.css handles everything else */
+
+:root {
+  --primary: #0f172a;
+  --accent: #d4af37;
+  --accent-glow: rgba(212, 175, 55, 0.35);
+  --card-bg: rgba(13, 21, 38, 0.9);
+  --text-main: #e5e7eb;
+  --text-muted: #94a3b8;
+  --border: rgba(212, 175, 55, 0.2);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
