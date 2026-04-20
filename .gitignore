@@ -1,1 +1,36 @@
+# ===== DEPENDENCIES =====
+node_modules/
+
+# ===== ENVIRONMENT VARIABLES (NEVER commit — contains secrets) =====
+.env
+.env.local
+.env.production
+.env.development.local
+.env.test.local
+.env.production.local
 backend/.env
+frontend/.env
+
+# ===== UPLOADED FILES (user content, not source code) =====
+uploads/
+backend/uploads/
+
+# ===== BUILD OUTPUT =====
+build/
+dist/
+
+# ===== LOGS =====
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# ===== OS FILES =====
+.DS_Store
+Thumbs.db
+
+# ===== EDITOR FILES =====
+.vscode/
+.idea/
+*.swp
+*.swo

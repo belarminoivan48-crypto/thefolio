@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://thefolio-t1rp.onrender.com/api', // ✅ /api is required
+  baseURL: 'https://thefolio-t1rp.onrender.com/api/', // ✅ trailing slash prevents route joining issues
 });
 
 instance.interceptors.request.use((config) => {
