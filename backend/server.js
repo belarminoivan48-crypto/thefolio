@@ -1,7 +1,10 @@
-import dns from 'dns';
-dns.setServers(['8.8.8.8', '8.8.4.4']); // This forces the server to find MongoDB correctly
+const dns = require('dns');
+dns.setServers(['8.8.8.8', '8.8.4.4']); // Forces Render to use Google DNS to find MongoDB
 
-require('dotenv').config(); // MUST be first
+require('dotenv').config(); 
+const express = require('express');
+
+girequire('dotenv').config(); // MUST be first
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -23,7 +26,7 @@ connectDB();
 app.use(cors({
   origin: [
   'http://localhost:3000',
-  'https://thefolio.vercel.app',
+  'https://thefolio-rouge.vercel.app/',
 ],
 credentials: true,
 }));
