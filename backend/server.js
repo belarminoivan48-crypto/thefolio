@@ -1,10 +1,5 @@
 // backend/server.js
-
-// ── Fix DNS resolution on Render (must come before everything else) ──
-const dns = require('dns');
-dns.setServers(['8.8.8.8', '8.8.4.4']); // Force Google DNS so Render can find MongoDB Atlas
-
-require('dotenv').config(); // Load .env variables
+require('dotenv').config();
 
 const express    = require('express');
 const cors       = require('cors');
@@ -21,21 +16,26 @@ const app = express();
 
 connectDB(); // Connect to MongoDB
 
-// ── Middleware ─────────────────────────────────────────────────
+// ── Global Middleware ──────────────────────────────────────────
 app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'https://thefolio.vercel.app',
-    'https://thefolio-rouge.vercel.app',  // no trailing slash
-  ],
+  origin: function (origin, callback) {
+    if (
+      !origin ||                                  // allow server-to-server / Postman
+      origin === 'http://localhost:3000' ||
+      origin === 'http://localhost:3001' ||
+      /\.vercel\.app$/.test(origin)               // accept ALL *.vercel.app domains
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 
 app.use(express.json());
 
 // Serve uploaded images as public static files
-// e.g. http://localhost:5000/uploads/my-image.jpg
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ── API Routes ────────────────────────────────────────────────
@@ -43,6 +43,11 @@ app.use('/api/auth',     authRoutes);
 app.use('/api/posts',    postRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/admin',    adminRoutes);
+
+// ── Health Check ──────────────────────────────────────────────
+app.get('/', (req, res) => {
+  res.json({ message: 'ChessRealm API is running ♔' });
+});
 
 // ── Start Server ──────────────────────────────────────────────
 const PORT = process.env.PORT || 5000;
