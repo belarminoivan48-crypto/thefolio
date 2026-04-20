@@ -1,3 +1,6 @@
+import dns from 'dns';
+dns.setServers(['8.8.8.8', '8.8.4.4']); // This forces the server to find MongoDB correctly
+
 require('dotenv').config(); // MUST be first
 const express = require('express');
 const cors = require('cors');
